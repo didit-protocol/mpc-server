@@ -1,0 +1,24 @@
+{
+  "name": "@didit-sdk/mcp-server",
+  "version": "0.1.0",
+  "description": "Didit MCP Server - AI agent integration for identity verification APIs",
+  "main": "dist/index.js",
+  "bin": {
+    "didit-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": ["didit", "mcp", "verification", "identity", "ai-agent"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0"
+  }
+}
