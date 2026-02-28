@@ -1,6 +1,6 @@
 {
   "name": "@didit-protocol/mcp-server",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Didit MCP Server - AI agent integration for identity verification APIs",
   "main": "dist/index.js",
   "bin": {
