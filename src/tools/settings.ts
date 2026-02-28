@@ -27,3 +27,12 @@ export async function updateWorkflow(uuid: string, data: Record<string, any>): P
   });
   return res.json();
 }
+
+export async function deleteWorkflow(uuid: string): Promise<any> {
+  const res = await fetch(`${DIDIT_API_BASE_URL}/workflows/${uuid}/`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+  if (res.status === 204) return { success: true };
+  return res.json();
+}
