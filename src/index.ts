@@ -15,6 +15,7 @@ import * as users from "./tools/users";
 import * as questionnaires from "./tools/questionnaires";
 import * as blocklist from "./tools/blocklist";
 import * as standalone from "./tools/standalone";
+import { DIDIT_API_BASE_URL, getHeaders } from "./config";
 
 const server = new Server(
   { name: "didit", version: "3.0.0" },
@@ -421,6 +422,25 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
       },
     },
 
+    // ── Webhook ────────────────────────────────────────────────────────
+    {
+      name: "didit_get_webhook",
+      description: "Get current webhook configuration including URL, version, and secret key for verifying signatures.",
+      inputSchema: { type: "object" as const, properties: {} },
+    },
+    {
+      name: "didit_update_webhook",
+      description: "Update webhook URL, version, or rotate the secret key. Set rotate_secret_key=true to get a new webhook secret.",
+      inputSchema: {
+        type: "object" as const,
+        properties: {
+          webhook_url: { type: "string", description: "URL to receive webhooks. Set to null to disable." },
+          webhook_version: { type: "string", description: "Payload version: v1, v2, or v3 (recommended)" },
+          rotate_secret_key: { type: "boolean", description: "Set true to generate new webhook secret" },
+        },
+      },
+    },
+
     // ── Blocklist ───────────────────────────────────────────────────────
     {
       name: "didit_list_blocklist",
@@ -742,6 +762,22 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "didit_top_up":
         result = await billing.topUp(args!.amount_in_dollars as number);
         break;
+
+      // Webhook
+      case "didit_get_webhook": {
+        const res = await fetch(`${DIDIT_API_BASE_URL}/webhook/`, { headers: getHeaders() });
+        result = await res.json();
+        break;
+      }
+      case "didit_update_webhook": {
+        const res = await fetch(`${DIDIT_API_BASE_URL}/webhook/`, {
+          method: "PATCH",
+          headers: getHeaders(),
+          body: JSON.stringify(args || {}),
+        });
+        result = await res.json();
+        break;
+      }
 
       // Blocklist
       case "didit_list_blocklist":
