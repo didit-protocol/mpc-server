@@ -108,6 +108,13 @@ Two API calls, zero friction. See [Programmatic Registration](https://docs.didit
 | `didit_update_user` | Update user metadata or tags |
 | `didit_delete_users` | Batch delete users by vendor_data list |
 
+### Webhook
+
+| Tool | Description |
+|------|-------------|
+| `didit_get_webhook` | Get webhook configuration (URL, version, secret key) |
+| `didit_update_webhook` | Update webhook URL/version or rotate the secret key |
+
 ### Billing
 
 | Tool | Description |
